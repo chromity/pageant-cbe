@@ -31,6 +31,10 @@ def pre_pageant_add(request):
     if request.method == "POST":
         form = PrePageantForm(request.POST)
 
+        if PrePageant.objects.get(judge=request.user, candidate__idx=request.POST['candidate']):
+            form = PrePageantForm
+            return render(request, 'candidates/pre_pageant_add.html', {'form': form})
+
         if form.is_valid():
             prepageant = form.save(commit=False)
             prepageant.judge = request.user

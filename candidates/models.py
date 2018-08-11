@@ -26,6 +26,9 @@ class PrePageant(models.Model):
     talent = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
+    def __str__(self):
+        return str(self.candidate)
+
 
 class OldStreetFashionAttire(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
@@ -35,6 +38,9 @@ class OldStreetFashionAttire(models.Model):
     beauty = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     performance_and_confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
+
+    def __str__(self):
+        return str(self.candidate)
 
 
 class UniformAttire(models.Model):
@@ -46,6 +52,9 @@ class UniformAttire(models.Model):
     performance_and_confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
+    def __str__(self):
+        return str(self.candidate)
+
 
 class FormalAttire(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
@@ -56,11 +65,17 @@ class FormalAttire(models.Model):
     stage_presence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
+    def __str__(self):
+        return str(self.candidate)
+
 
 class QuestionAndAnswer(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     judge = models.ForeignKey(User, on_delete=models.CASCADE)
     total = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+
+    def __str__(self):
+        return str(self.candidate)
 
 
 # Totals
@@ -72,6 +87,9 @@ class PrePageantTotal(models.Model):
     talent = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
+    def __str__(self):
+        return str(self.candidate)
+
 
 class OldStreetFashionAttireTotal(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
@@ -80,6 +98,9 @@ class OldStreetFashionAttireTotal(models.Model):
     beauty = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     performance_and_confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
+
+    def __str__(self):
+        return str(self.candidate)
 
 
 class UniformAttireTotal(models.Model):
@@ -90,6 +111,9 @@ class UniformAttireTotal(models.Model):
     performance_and_confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
+    def __str__(self):
+        return str(self.candidate)
+
 
 class FormalAttireTotal(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
@@ -99,11 +123,16 @@ class FormalAttireTotal(models.Model):
     stage_presence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
+    def __str__(self):
+        return str(self.candidate)
+
 
 class QuestionAndAnswerTotal(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
     total = models.FloatField(null=True)
 
+    def __str__(self):
+        return str(self.candidate)
 
 class PageantProper(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
@@ -112,6 +141,9 @@ class PageantProper(models.Model):
     formal_attire = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
 
+    def __str__(self):
+        return str(self.candidate)
+
 
 class PageantNight(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
@@ -119,10 +151,14 @@ class PageantNight(models.Model):
     pageant_proper = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
 
+    def __str__(self):
+        return str(self.candidate)
+
 
 class PageantResult(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
     pageant_night = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     question_and_answer = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
 
-
+    def __str__(self):
+        return str(self.candidate)
