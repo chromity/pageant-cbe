@@ -4,13 +4,13 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Candidate(models.Model):
-    id = models.IntegerField(primary_key=True)
+    idx = models.IntegerField(null=True)
     picture = models.ImageField(default="default.png")
     first_name = models.CharField(max_length=50)
     middle_initial = models.CharField(blank=True, max_length=5)
     last_name = models.CharField(max_length=50)
     program = models.CharField(max_length=50)
-    sex = models.BooleanField()
+    sex = models.CharField(max_length=8, choices=(('Male', 'Male'), ('Female', 'Female')))
     age = models.IntegerField(blank=True)
     order = models.IntegerField(null=True)
 

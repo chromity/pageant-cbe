@@ -12,6 +12,15 @@ def index(request):
     return render(request, 'candidates/index.html', context)
 
 
+def pre_pageant_list(request):
+    data = PrePageant.objects.filter(judge=request.user).order_by('total')
+    return render(request, 'candidates/pre_pageant_list.html', {'data': data})
+
+
+def pre_pageant_detail(request):
+    return render(request, 'candidates/pre_pageant_detail.html')
+
+
 def pre_pageant_add(request):
     if request.method == "POST":
         form = PrePageantForm(request.POST)
@@ -29,10 +38,6 @@ def pre_pageant_add(request):
     else:
         form = PrePageantForm
         return render(request, 'candidates/pre_pageant_add.html', {'form': form})
-
-
-def pre_pageant_detail(request):
-    return render(request, 'candidates/pre_pageant_detail.html')
 
 
 def pre_pageant_edit(request, pk):
