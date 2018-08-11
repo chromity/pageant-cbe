@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Candidate(models.Model):
@@ -18,83 +19,83 @@ class Candidate(models.Model):
 class PrePageant(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     judge = models.ForeignKey(User, on_delete=models.CASCADE)
-    corporate_attire = models.FloatField()
-    panel_interview = models.FloatField()
-    essay = models.FloatField()
-    talent = models.FloatField()
+    corporate_attire = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    panel_interview = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    essay = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    talent = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
 
 class OldStreetFashionAttire(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     judge = models.ForeignKey(User, on_delete=models.CASCADE)
-    poise_and_bearing = models.FloatField()
-    personality = models.FloatField()
-    beauty = models.FloatField()
-    performance_and_confidence = models.FloatField()
+    poise_and_bearing = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    personality = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    beauty = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    performance_and_confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
 
 class UniformAttire(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     judge = models.ForeignKey(User, on_delete=models.CASCADE)
-    poise_and_bearing = models.FloatField()
-    personality = models.FloatField()
-    beauty = models.FloatField()
-    performance_and_confidence = models.FloatField()
+    poise_and_bearing = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    personality = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    beauty = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    performance_and_confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
 
 class FormalAttire(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     judge = models.ForeignKey(User, on_delete=models.CASCADE)
-    beauty_and_physique = models.FloatField()
-    poise_and_elegance = models.FloatField()
-    confidence = models.FloatField()
-    stage_presence = models.FloatField()
+    beauty_and_physique = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    poise_and_elegance = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    stage_presence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
 
 class QuestionAndAnswer(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
     judge = models.ForeignKey(User, on_delete=models.CASCADE)
-    total = models.FloatField()
+    total = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
 
 
 # Totals
 class PrePageantTotal(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
-    corporate_attire = models.FloatField()
-    panel_interview = models.FloatField()
-    essay = models.FloatField()
-    talent = models.FloatField()
+    corporate_attire = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    panel_interview = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    essay = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    talent = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
 
 class OldStreetFashionAttireTotal(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
-    poise_and_bearing = models.FloatField()
-    personality = models.FloatField()
-    beauty = models.FloatField()
-    performance_and_confidence = models.FloatField()
+    poise_and_bearing = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    personality = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    beauty = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    performance_and_confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
 
 class UniformAttireTotal(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
-    poise_and_bearing = models.FloatField()
-    personality = models.FloatField()
-    beauty = models.FloatField()
-    performance_and_confidence = models.FloatField()
+    poise_and_bearing = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    personality = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    beauty = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    performance_and_confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
 
 class FormalAttireTotal(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
-    beauty_and_physique = models.FloatField()
-    poise_and_elegance = models.FloatField()
-    confidence = models.FloatField()
-    stage_presence = models.FloatField()
+    beauty_and_physique = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    poise_and_elegance = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    confidence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    stage_presence = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     total = models.FloatField(null=True)
 
 
@@ -105,22 +106,22 @@ class QuestionAndAnswerTotal(models.Model):
 
 class PageantProper(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
-    old_street_fashion = models.FloatField()
-    uniform = models.FloatField()
-    formal_attire = models.FloatField()
-    total = models.FloatField()
+    old_street_fashion = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    uniform = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    formal_attire = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    total = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
 
 
 class PageantNight(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
-    pre_pageant = models.FloatField()
-    pageant_proper = models.FloatField()
-    total = models.FloatField()
+    pre_pageant = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    pageant_proper = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    total = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
 
 
 class PageantResult(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
-    pageant_night = models.FloatField()
-    question_and_answer = models.FloatField()
+    pageant_night = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
+    question_and_answer = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
 
 
