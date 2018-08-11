@@ -182,3 +182,5 @@ fabric.properties
 
 .gitignore
 .idea/
+Pipfile
+Pipfile.lock
