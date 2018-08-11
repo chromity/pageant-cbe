@@ -2,5 +2,42 @@
 {% load static %}
 
 {% block content %}
-    <a class="btn btn-default" href="{% url 'pre_pageant_edit' pk=prepageant.pk %}">Edit Pre-Pageant</a>
+<div>
+    {% if data %}
+    <div>
+        <h6>Number</h6>
+        <p>{{ data.candidate.idx }}</p>
+    </div>
+    <div>
+        <h6>Name</h6>
+        <p>{{ data.candidate.first_name }} + " " + {{ data.candidate.last_name }}</p>
+    </div>
+    <div>
+        <h6>Program</h6>
+        <p>{{ data.candidate.program }}</p>
+    </div>
+    <div>
+        <h6>Corporate Attire</h6>
+        <p>{{ data.corporate_attire }}</p>
+    </div>
+    <div>
+        <h6>Panel Interview</h6>
+        <p>{{ data.panel_interview }}</p>
+    </div>
+    <div>
+        <h6>Essay</h6>
+        <p>{{ data.essay }}</p>
+    </div>
+    <div>
+        <h6>Talent</h6>
+        <p>{{ data.talent }}</p>
+    </div>
+    <div>
+        <h6>Total</h6>
+        <p>{{ data.total }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<a class="btn btn-default" href="{% url 'pre_pageant_edit' pk=prepageant.pk %}">Edit Pre-Pageant</a>
 {% endblock %}
