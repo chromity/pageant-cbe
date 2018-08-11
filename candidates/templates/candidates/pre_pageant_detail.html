@@ -10,7 +10,7 @@
     </div>
     <div>
         <h6>Name</h6>
-        <p>{{ data.candidate.first_name }} + " " + {{ data.candidate.last_name }}</p>
+        <p>{{ data.candidate.first_name }}<span> </span>{{ data.candidate.last_name }}</p>
     </div>
     <div>
         <h6>Program</h6>
@@ -39,5 +39,5 @@
     {% endif %}
 </div>
 
-<a class="btn btn-default" href="{% url 'pre_pageant_edit' pk=prepageant.pk %}">Edit Pre-Pageant</a>
+<a class="btn btn-default" href="{% url 'pre_pageant_edit' pk=data.pk %}">Edit Pre-Pageant</a>
 {% endblock %}

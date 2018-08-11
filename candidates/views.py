@@ -35,10 +35,10 @@ def pre_pageant_add(request):
             prepageant = form.save(commit=False)
             prepageant.judge = request.user
             prepageant.total = float(
-                        form.talent / 100.0000 * 30 +
-                        form.essay / 100.0000 * 30 +
-                        form.corporate_attire / 100.0000 * 20 +
-                        form.panel_interview / 100.0000 * 20)
+                        prepageant.talent / 100.0000 * 30 +
+                        prepageant.essay / 100.0000 * 30 +
+                        prepageant.corporate_attire / 100.0000 * 20 +
+                        prepageant.panel_interview / 100.0000 * 20)
             prepageant.save()
             return redirect('pre_pageant_detail', pk=prepageant.pk)
     else:
@@ -57,12 +57,12 @@ def pre_pageant_edit(request, pk):
             prepageant = form.save(commit=False)
             prepageant.judge = request.user
             prepageant.total = float(
-                form.talent / 100.0000 * 30 +
-                form.essay / 100.0000 * 30 +
-                form.corporate_attire / 100.0000 * 20 +
-                form.panel_interview / 100.0000 * 20)
+                prepageant.talent / 100.0000 * 30 +
+                prepageant.essay / 100.0000 * 30 +
+                prepageant.corporate_attire / 100.0000 * 20 +
+                prepageant.panel_interview / 100.0000 * 20)
             prepageant.save()
             return redirect('pre_pageant_detail', pk=prepageant.pk)
     else:
-        form = PrePageantForm(instance=PrePageant)
+        form = PrePageantForm(instance=prepageant)
         return render(request, 'candidates/pre_pageant_edit.html', {'form': form})
