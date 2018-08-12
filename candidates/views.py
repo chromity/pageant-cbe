@@ -72,3 +72,153 @@ def pre_pageant_edit(request, pk):
         return render(request, 'candidates/pre_pageant_edit.html', {'form': form})
 
 
+@login_required(login_url='admin:login')
+def formal_attire_list(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def formal_attire_details(request, pk):
+    pass
+
+
+@login_required(login_url='admin:login')
+def formal_attire_add(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def formal_attire_edit(request, pk):
+    pass
+
+
+@login_required(login_url='admin:login')
+def formal_attire_add_all(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def formal_attire_overview(request):
+    pass
+
+
+def formal_attire_add_all_logic(request):
+    pass
+
+
+def formal_attire_compute_total():
+    pass
+
+
+@login_required(login_url='admin:login')
+def uniform_attire_list(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def uniform_attire_details(request, pk):
+    pass
+
+
+@login_required(login_url='admin:login')
+def uniform_attire_add(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def uniform_attire_edit(request, pk):
+    pass
+
+
+@login_required(login_url='admin:login')
+def uniform_attire_add_all(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def uniform_attire_overview(request):
+    pass
+
+
+def uniform_attire_add_all_logic(request):
+    pass
+
+
+def uniform_attire_compute_total():
+    pass
+
+
+@login_required(login_url='admin:login')
+def old_street_fashion_attire_list(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def old_street_fashion_attire_details(request, pk):
+    pass
+
+
+@login_required(login_url='admin:login')
+def old_street_fashion_attire_add(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def old_street_fashion_attire_edit(request, pk):
+    pass
+
+
+@login_required(login_url='admin:login')
+def old_street_fashion_attire_add_all(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def old_street_fashion_attire_overview(request):
+    pass
+
+
+def old_street_fashion_attire_add_all_logic(request):
+    pass
+
+
+def old_street_fashion_attire_compute_total():
+    pass
+
+
+@login_required(login_url='admin:login')
+def question_and_answer_list(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def question_and_answer_details(request, pk):
+    pass
+
+
+@login_required(login_url='admin:login')
+def question_and_answer_add(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def question_and_answer_edit(request, pk):
+    pass
+
+
+@login_required(login_url='admin:login')
+def question_and_answer_add_all(request):
+    pass
+
+
+@login_required(login_url='admin:login')
+def question_and_answer_overview(request):
+    pass
+
+
+def question_and_answer_add_all_logic(request):
+    pass
+
+
+def question_and_answer_compute_total():
+    pass
