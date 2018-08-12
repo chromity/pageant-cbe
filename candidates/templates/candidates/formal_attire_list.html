@@ -2,22 +2,26 @@
 {% load static %}
 
 {% block form %}
-<link href="{% static 'css/add.css' %}" rel="stylesheet" />
+<link href="{% static 'css/add.css' %}" rel="stylesheet"/>
+
+<div class="page-label-box">
+    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Formal Attire Data</h2>
+</div>
 
 <div class="row" id="table-content">
-    <h3>Female Candidates</h3>
+    <h3 class="table-label-x">Female Candidates</h3>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col" style="width: 20%;">Name</th>
-            <th scope="col">Program</th>
-            <th scope="col">Beauty and Physique</th>
-            <th scope="col">Poise and Elegance</th>
-            <th scope="col">Confidence</th>
-            <th scope="col">Stage Presence</th>
-            <th scope="col">Total</th>
-            <th scope="col">Control</th>
+            <th scope="col" style="width: 3%;">#</th>
+            <th scope="col" style="width: 18%;">Name</th>
+            <th scope="col" style="width: 10%;">Program</th>
+            <th scope="col" style="width: 12%;">Beauty and Physique</th>
+            <th scope="col" style="width: 12%;">Poise and Elegance</th>
+            <th scope="col" style="width: 10%;">Confidence</th>
+            <th scope="col" style="width: 10%;">Stage Presence</th>
+            <th scope="col" style="width: 5%;">Total</th>
+            <th scope="col" style="width: 5%;">Control</th>
         </tr>
         </thead>
         <tbody>
@@ -32,26 +36,26 @@
             <td>{{ each.confidence }}</td>
             <td>{{ each.stage_presence }}</td>
             <td>{{ each.total }}</td>
-            <td><a href="{% url 'formal_attire_detail' pk=each.pk %}">Edit</a></td>
+            <td><a href="{% url 'candidates:formal_attire_detail' pk=each.pk %}">Edit</a></td>
         </tr>
         {% endif %}
         {% endfor %}
         </tbody>
     </table>
 
-    <h3>Male Candidates</h3>
+    <h3 class="table-label-x table-label-male">Male Candidates</h3>
     <table class="table table-striped">
         <thead>
         <tr>
-            <th scope="col">#</th>
-            <th scope="col" style="width: 20%;">Name</th>
-            <th scope="col">Program</th>
-            <th scope="col">Beauty and Physique</th>
-            <th scope="col">Poise and Elegance</th>
-            <th scope="col">Confidence</th>
-            <th scope="col">Stage Presence</th>
-            <th scope="col">Total</th>
-            <th scope="col">Control</th>
+            <th scope="col" style="width: 3%;">#</th>
+            <th scope="col" style="width: 18%;">Name</th>
+            <th scope="col" style="width: 10%;">Program</th>
+            <th scope="col" style="width: 12%;">Beauty and Physique</th>
+            <th scope="col" style="width: 12%;">Poise and Elegance</th>
+            <th scope="col" style="width: 10%;">Confidence</th>
+            <th scope="col" style="width: 10%;">Stage Presence</th>
+            <th scope="col" style="width: 5%;">Total</th>
+            <th scope="col" style="width: 5%;">Control</th>
         </tr>
         </thead>
         <tbody>
@@ -66,7 +70,7 @@
             <td>{{ each.confidence }}</td>
             <td>{{ each.stage_presence }}</td>
             <td>{{ each.total }}</td>
-            <td><a href="{% url 'formal_attire_detail' pk=each.pk %}">Edit</a></td>
+            <td><a href="{% url 'candidates:formal_attire_detail' pk=each.pk %}">Edit</a></td>
         </tr>
         {% endif %}
         {% endfor %}

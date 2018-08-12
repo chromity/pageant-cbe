@@ -1,0 +1,172 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:200,100,300');
+@import url('https://fonts.googleapis.com/css?family=Roboto:200,100,300');
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,100,400,500');
+
+#navbar-x {
+    background: #8E2DE2; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #4A00E0, #8E2DE2); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #4A00E0, #8E2DE2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    height: 74px;
+}
+
+#navbar-x div {
+    display: inline-block;
+}
+
+.navbar-x-text {
+    text-transform: uppercase;
+    font-size: 16px;
+    color: white;
+}
+
+.navbar-x-event-title {
+    font-size: 28px;
+    margin-bottom: -15px;
+    font-weight: 100;
+}
+
+.navbar-x-event-host {
+    font-weight: 200;
+}
+
+#navbar-x-title {
+    margin-top: -10px;
+    margin-left: 15px;
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 200;
+}
+
+p, td, a, .btn-x {
+    font-family: "Raleway", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+}
+
+.btn-x {
+    text-transform: uppercase;
+    border-radius: 0;
+}
+
+table tbody tr th, table tbody tr td {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 200;
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+.table-label-male {
+    margin-top: 50px;
+}
+
+.remove-hover-underline:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.nav-links {
+    float: right;
+    display: inline;
+    margin-top: 1vh;
+    margin-right: 3vw;
+    padding-top: -1px;
+}
+
+.nav-links h2 {
+    text-transform: uppercase;
+    display: inline-block;
+    color: white;
+    font-weight: 300;
+    font-size: 18px;
+    margin-left: 15px;
+}
+
+.page-label {
+    text-transform: uppercase;
+    padding-left: 15px;
+    margin-top: 10px;
+    padding-right: 20px;
+    font-size: 20px;
+    font-weight: 200;
+    color: white;
+}
+
+.table-label-x {
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    font-size: 22px;
+}
+
+.details-candidate {
+    display: inline;
+    background: lightpink;
+    padding-right: 20px;
+    padding-top: 40px;
+    padding-bottom: 15px;
+    padding-left: 20px;
+    margin-left: -20px;
+}
+
+.details-candidate div {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.page-label-box {
+    background: #B24592; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #F15F79, #B24592); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    display: inline-block;
+    margin-left: 20px;
+    height: 45px;
+    margin-top: 25px;
+}
+
+.detail-content {
+    margin-left: 10vw;
+    margin-top: 5vh;
+    border-radius: 0;
+}
+
+.details-score {
+    padding-top: 15px;
+}
+
+.detail-data {
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+body {
+    font-family: "Raleway", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 400;
+}
+
+.btn-x {
+    margin-top: 15px;
+    margin-left: -15px;
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    padding-top: 8px;
+}
+
+#btn-transact {
+    background: #f857a6; /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #ff5858, #f857a6); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #ff5858, #f857a6); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-radius: 20px;
+    border-color: white;
+    color: white;
+    height: 40px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.btn-t-x {
+    float: right;
+    margin-right: 10vw;
+    margin-top: 105px;
+}

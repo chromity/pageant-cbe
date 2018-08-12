@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+app_name = 'candidates'
 urlpatterns = [
     path('', views.index, name='index'),
     path('pre_pageant/list', views.pre_pageant_list, name='pre_pageant_list'),

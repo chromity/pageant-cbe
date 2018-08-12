@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block form %}
+<div class="page-label-box">
+    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>New Formal Attire Data</h2>
+</div>
+
 <h1>New Formal Attire Data</h1>
 <form method="POST" class="post-form">{% csrf_token %}
     {{ form.non_field_errors }}
