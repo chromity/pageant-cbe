@@ -70,3 +70,5 @@ def pre_pageant_edit(request, pk):
     else:
         form = PrePageantForm(instance=prepageant)
         return render(request, 'candidates/pre_pageant_edit.html', {'form': form})
+
+
