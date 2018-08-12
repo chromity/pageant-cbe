@@ -1,7 +1,8 @@
 {% extends 'add.html' %}
+{% load static %}
 
 {% block form %}
-    <h1>New Pre-Pageant</h1>
+    <h1>Cast Pre-Pageant Score</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>

@@ -1,7 +1,7 @@
 {% extends 'add.html' %}
 
 {% block form %}
-    <h1>Edit Pre-Pageant</h1>
+    <h1>Edit Pre-Pageant Data</h1>
     <form method="POST" class="post-form">{% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="save btn btn-default">Save</button>

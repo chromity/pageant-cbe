@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+<link href="{% static 'css/detail.css' %}" rel="stylesheet" />
+
+{% block content %}
+ <div>
+    {% if data %}
+    <div>
+        <h6>Number</h6>
+        <p>{{ data.candidate.idx }}</p>
+    </div>
+    <div>
+        <h6>Name</h6>
+        <p>{{ data.candidate.first_name }}<span> </span>{{ data.candidate.last_name }}</p>
+    </div>
+    <div>
+        <h6>Program</h6>
+        <p>{{ data.candidate.program }}</p>
+    </div>
+    <div>
+        <h6>Beauty and Physique</h6>
+        <p>{{ data.beauty_and_physique }}</p>
+    </div>
+    <div>
+        <h6>Poise and Elegance</h6>
+        <p>{{ data.poise_and_elegance }}</p>
+    </div>
+    <div>
+        <h6>Confidence</h6>
+        <p>{{ data.confidence }}</p>
+    </div>
+    <div>
+        <h6>Stage Presence</h6>
+        <p>{{ data.stage_presence }}</p>
+    </div>
+    <div>
+        <h6>Total</h6>
+        <p>{{ data.total }}</p>
+    </div>
+    {% endif %}
+</div>
+
+<a class="btn btn-default" href="{% url 'formal_attire_edit' pk=data.pk %}">Edit Pre-Pageant</a>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'add.html' %}
+{% load static %}
+
+{% block form %}
+<h1>New Formal Attire Data</h1>
+<form method="POST" class="post-form">{% csrf_token %}
+    {{ form.non_field_errors }}
+    <div class="fieldWrapper form-candidate">
+        {{ form.candidate.errors }}
+        <label class="form-label" for="{{ form.candidate.id_for_label }}">Candidate</label>
+        {{ form.candidate }}
+    </div>
+
+    <div class="fieldWrapper form-input-text">
+        {{ form.beauty_and_physique.errors }}
+        <label class="form-label" for="{{ form.beauty_and_physique.id_for_label }}">Beauty and Physique</label>
+        {{ form.beauty_and_physique }}
+    </div>
+
+    <div class="fieldWrapper form-input-text">
+        {{ form.poise_and_elegance.errors }}
+        <label class="form-label" for="{{ form.poise_and_elegance.id_for_label }}">Poise and Elegance</label>
+        {{ form.poise_and_elegance }}
+    </div>
+
+    <div class="fieldWrapper form-input-text">
+        {{ form.confidence.errors }}
+        <label class="form-label" for="{{ form.confidence.id_for_label }}">Confidence</label>
+        {{ form.confidence }}
+    </div>
+
+    <div class="fieldWrapper form-input-text">
+        {{ form.stage_presence.errors }}
+        <label class="form-label" for="{{ form.stage_presence.id_for_label }}">Stage Presence</label>
+        {{ form.stage_presence }}
+    </div>
+
+    <button type="submit" class="save btn btn-default">Save</button>
+</form>
+{% endblock %}

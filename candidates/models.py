@@ -15,6 +15,9 @@ class Candidate(models.Model):
     def __str__(self):
         return "#" + str(self.idx) + " " +  self.first_name + " " + self.last_name
 
+    class Meta:
+        ordering = ('idx', 'sex')
+
 
 # Individual instances
 class PrePageant(models.Model):

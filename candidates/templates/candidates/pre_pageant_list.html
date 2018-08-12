@@ -49,6 +49,7 @@
             <th scope="col">Essay</th>
             <th scope="col">Talent</th>
             <th scope="col">Total</th>
+            <th scope="col">Control</th>
         </tr>
         </thead>
         <tbody>
@@ -56,13 +57,14 @@
         {% if each.candidate.sex == 'Male' %}
         <tr>
             <th scope="row">{{ each.candidate.idx }}</th>
-            <td>{{ each.candidate.first_name }} + " " + {{ each.candidate.last_name }}</td>
+            <td>{{ each.candidate.first_name }}<span> </span>{{ each.candidate.last_name }}</td>
             <td>{{ each.candidate.program }}</td>
             <td>{{ each.corporate_attire }}</td>
             <td>{{ each.panel_interview }}</td>
             <td>{{ each.essay }}</td>
             <td>{{ each.talent }}</td>
             <td>{{ each.total }}</td>
+            <td><a href="{% url 'pre_pageant_detail' pk=each.pk %}">Edit</a></td>
         </tr>
         {% endif %}
         {% endfor %}
