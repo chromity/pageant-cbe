@@ -8,7 +8,7 @@ urlpatterns = [
     path('pre_pageant/<int:pk>/', views.pre_pageant_detail, name='pre_pageant_detail'),
     path('pre_pageant/<int:pk>/edit/', views.pre_pageant_edit, name='pre_pageant_edit'),
     path('pre_pageant/add', views.pre_pageant_add, name='pre_pageant_add'),
-    path('pre_pageant/overview', views.pre_pagaeant_overview, name='pre_pageant_overview'),
+    path('pre_pageant/overview', views.pre_pageant_overview, name='pre_pageant_overview'),
 
     path('old_street_fashion_attire/list', views.old_street_fashion_attire_list, name='old_street_fashion_attire_list'),
     path('old_street_fashion_attire/<int:pk>/', views.old_street_fashion_attire_detail,
@@ -16,9 +16,10 @@ urlpatterns = [
     path('old_street_fashion_attire/<int:pk>/edit/', views.old_street_fashion_attire_edit,
          name='old_street_fashion_attire_edit'),
     path('old_street_fashion_attire/add', views.old_street_fashion_attire_add, name='old_street_fashion_attire_add'),
-    path('old_street_fashion/overview', views.old_street_fashion_overview, name='old_street_fashion_overview'),
-    path('old_street_fashion/add_all', views.old_street_fashion_add_all, name='old_street_fashion_add_all'),
-    path('old_street_fashion_add_all_logic', views.old_street_fashion_add_all_logic,
+    path('old_street_fashion/overview', views.old_street_fashion_attire_overview,
+         name='old_street_fashion_attire_overview'),
+    path('old_street_fashion/add_all', views.old_street_fashion_attire_add_all, name='old_street_fashion_add_all'),
+    path('old_street_fashion_add_all_logic', views.old_street_fashion_attire_add_all_logic,
          name='old_street_fashion_add_all_logic'),
 
     path('formal_attire/list', views.formal_attire_list, name='formal_attire_list'),

@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from candidates.models import *
-from .forms import PrePageantForm
+from .forms import *
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 
@@ -31,7 +31,7 @@ def pre_pageant_add(request):
     if request.method == "POST":
         form = PrePageantForm(request.POST)
 
-        if PrePageant.objects.get(judge=request.user, candidate__idx=request.POST['candidate']):
+        if PrePageant.objects.get(judge=request.user, candidate__id=request.POST['candidate']):
             form = PrePageantForm
             return render(request, 'candidates/pre_pageant_add.html', {'form': form})
 
@@ -73,18 +73,47 @@ def pre_pageant_edit(request, pk):
 
 
 @login_required(login_url='admin:login')
-def formal_attire_list(request):
+def pre_pageant_overview(request):
     pass
 
 
 @login_required(login_url='admin:login')
-def formal_attire_details(request, pk):
-    pass
+def formal_attire_list(request):
+    data = FormalAttire.objects.filter(judge=request.user).order_by('total')
+    return render(request, 'candidates/formal_attire_list.html', {'data': data})
+
+
+@login_required(login_url='admin:login')
+def formal_attire_detail(request, pk):
+    data = get_object_or_404(FormalAttire, pk=pk)
+    return render(request, 'candidates/formal_attire_detail.html', {'data': data})
 
 
 @login_required(login_url='admin:login')
 def formal_attire_add(request):
-    pass
+    if request.method == "POST":
+        form = FormalAttireForm(request.POST)
+
+        if FormalAttire.objects.get(judge=request.user, candidate__id=request.POST['candidate']):
+            form = FormalAttireForm
+            return render(request, 'candidates/formal_attire_add.html', {'form': form})
+
+        if form.is_valid():
+            formal_attire = form.save(commit=False)
+            formal_attire.judge = request.user
+            formal_attire.total = float(
+                formal_attire.beauty_and_physique / 100.0000 * 30 +
+                formal_attire.poise_and_elegance / 100.0000 * 30 +
+                formal_attire.confidence / 100.0000 * 20 +
+                formal_attire.stage_presence / 100.0000 * 20)
+            formal_attire.save()
+
+            formal_attire_compute_total()
+
+            return redirect('formal_attire_detail', pk=formal_attire.pk)
+    else:
+        form = FormalAttireForm
+        return render(request, 'candidates/formal_attire_add.html', {'form': form})
 
 
 @login_required(login_url='admin:login')
@@ -116,7 +145,7 @@ def uniform_attire_list(request):
 
 
 @login_required(login_url='admin:login')
-def uniform_attire_details(request, pk):
+def uniform_attire_detail(request, pk):
     pass
 
 
@@ -154,7 +183,7 @@ def old_street_fashion_attire_list(request):
 
 
 @login_required(login_url='admin:login')
-def old_street_fashion_attire_details(request, pk):
+def old_street_fashion_attire_detail(request, pk):
     pass
 
 
@@ -192,7 +221,7 @@ def question_and_answer_list(request):
 
 
 @login_required(login_url='admin:login')
-def question_and_answer_details(request, pk):
+def question_and_answer_detail(request, pk):
     pass
 
 
