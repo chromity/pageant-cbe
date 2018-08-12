@@ -166,8 +166,15 @@ class PageantNight(models.Model):
         return str(self.candidate)
 
 
-class PageantResult(models.Model):
+class RankSix(models.Model):
     candidate = models.OneToOneField(Candidate, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.candidate)
+
+
+class PageantResult(models.Model):
+    candidate = models.OneToOneField(RankSix, on_delete=models.CASCADE)
     pageant_night = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     question_and_answer = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
     votes = models.IntegerField(default=0)
