@@ -13,7 +13,7 @@ class Candidate(models.Model):
     order = models.IntegerField(null=True)
 
     def __str__(self):
-        return "# " + str(self.idx) + " " +  self.first_name + " " + self.last_name
+        return "#" + str(self.idx) + " " +  self.first_name + " " + self.last_name
 
 
 # Individual instances
