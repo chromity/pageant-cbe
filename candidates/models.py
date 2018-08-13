@@ -32,6 +32,9 @@ class PrePageant(models.Model):
     def __str__(self):
         return str(self.candidate)
 
+    class Meta:
+        unique_together = ("candidate", "judge")
+
 
 class OldStreetFashionAttire(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
@@ -44,6 +47,9 @@ class OldStreetFashionAttire(models.Model):
 
     def __str__(self):
         return str(self.candidate)
+
+    class Meta:
+        unique_together = ("candidate", "judge")
 
 
 class UniformAttire(models.Model):
@@ -58,6 +64,9 @@ class UniformAttire(models.Model):
     def __str__(self):
         return str(self.candidate)
 
+    class Meta:
+        unique_together = ("candidate", "judge")
+
 
 class FormalAttire(models.Model):
     candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
@@ -70,6 +79,10 @@ class FormalAttire(models.Model):
 
     def __str__(self):
         return str(self.candidate)
+
+    class Meta:
+        unique_together = ("candidate", "judge")
+
 
 # Totals
 class PrePageantTotal(models.Model):
@@ -165,6 +178,9 @@ class QuestionAndAnswer(models.Model):
 
     def __str__(self):
         return str(self.candidate)
+
+    class Meta:
+        unique_together = ("candidate", "judge")
 
 
 class QuestionAndAnswerTotal(models.Model):
