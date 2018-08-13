@@ -3,6 +3,9 @@ from candidates.models import *
 from .forms import *
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 @login_required(login_url='admin:login')
@@ -11,6 +14,8 @@ def index(request):
 
     }
 
+    # test logger
+    logger.info('hello world, index!')
     return render(request, 'candidates/index.html', context)
 
 
@@ -35,10 +40,10 @@ def pre_pageant_add(request):
             prepageant = form.save(commit=False)
             prepageant.judge = request.user
             prepageant.total = float(
-                    prepageant.talent / 100.0000 * 30 +
-                    prepageant.essay / 100.0000 * 30 +
-                    prepageant.corporate_attire / 100.0000 * 20 +
-                    prepageant.panel_interview / 100.0000 * 20)
+                prepageant.talent / 100.0000 * 30 +
+                prepageant.essay / 100.0000 * 30 +
+                prepageant.corporate_attire / 100.0000 * 20 +
+                prepageant.panel_interview / 100.0000 * 20)
             prepageant.save()
 
             pre_pageant_compute_total(request.POST['candidate'])
@@ -99,7 +104,6 @@ def pre_pageant_compute_total(idx):
     pp.save()
 
 
-
 @login_required(login_url='admin:login')
 def pre_pageant_overview(request):
     data = PrePageantTotal.objects.all().order_by('-total')
@@ -127,10 +131,10 @@ def formal_attire_add(request):
             formal_attire = form.save(commit=False)
             formal_attire.judge = request.user
             formal_attire.total = float(
-                    formal_attire.beauty_and_physique / 100.0000 * 40 +
-                    formal_attire.poise_and_elegance / 100.0000 * 30 +
-                    formal_attire.confidence / 100.0000 * 20 +
-                    formal_attire.stage_presence / 100.0000 * 10)
+                formal_attire.beauty_and_physique / 100.0000 * 40 +
+                formal_attire.poise_and_elegance / 100.0000 * 30 +
+                formal_attire.confidence / 100.0000 * 20 +
+                formal_attire.stage_presence / 100.0000 * 10)
             formal_attire.save()
 
             formal_attire_compute_total(request.POST['candidate'])
@@ -228,10 +232,10 @@ def uniform_attire_add(request):
             uniform_attire = form.save(commit=False)
             uniform_attire.judge = request.user
             uniform_attire.total = float(
-                    uniform_attire.poise_and_bearing / 100.0000 * 40 +
-                    uniform_attire.personality / 100.0000 * 20 +
-                    uniform_attire.beauty / 100.0000 * 20 +
-                    uniform_attire.performance_and_confidence / 100.0000 * 20)
+                uniform_attire.poise_and_bearing / 100.0000 * 40 +
+                uniform_attire.personality / 100.0000 * 20 +
+                uniform_attire.beauty / 100.0000 * 20 +
+                uniform_attire.performance_and_confidence / 100.0000 * 20)
 
             uniform_attire.save()
 
@@ -301,7 +305,6 @@ def uniform_attire_compute_total(idx):
     uniform_attire_total.save()
 
     pageant_proper_compute_total(idx)
-
 
 
 @login_required(login_url='admin:login')
@@ -439,7 +442,7 @@ def question_and_answer_add(request):
             question_and_answer.judge = request.user
             question_and_answer.save()
 
-            question_and_answer_compute_total(request.POST['candidate'])
+            question_and_answer_compute_total(question_and_answer.candidate.candidate.id)
 
             return redirect('candidates:question_and_answer_list')
     else:
@@ -459,12 +462,12 @@ def question_and_answer_edit(request, pk):
             question_and_answer.judge = request.user
             question_and_answer.save()
 
-            question_and_answer_compute_total(request.POST['candidate'])
+            question_and_answer_compute_total(question_and_answer.candidate.candidate.id)
 
             return redirect('candidates:question_and_answer_list')
     else:
         form = QuestionAndAnswerForm(instance=question_and_answer)
-        return render(request, 'candidates/question_and_answwer_edit.html', {'form': form})
+        return render(request, 'candidates/question_and_answer_edit.html', {'form': form})
 
 
 @login_required(login_url='admin:login')
@@ -476,11 +479,6 @@ def question_and_answer_overview(request):
             incomplete += 1
 
     if incomplete == 0:
-        try:
-            PageantResult.objects.all()
-        except PageantResult.DoesNotExist:
-            create_pageant_result()
-
         data = QuestionAndAnswerTotal.objects.all().order_by('-total')
         return render(request, 'candidates/question_and_answer_overview.html', {'data': data})
     else:
@@ -491,12 +489,20 @@ def question_and_answer_overview(request):
 def question_and_answer_compute_total(idx):
     counter, total = 0, 0
 
-    for each in QuestionAndAnswerTotal.objects.filter(candidate__id=idx):
+    try:
+        question_and_answer_total = QuestionAndAnswerTotal.objects.get(candidate__candidate__id=idx)
+    except QuestionAndAnswerTotal.DoesNotExist:
+        candidate = RankSix.objects.get(candidate__id=idx)
+        question_and_answer_total = QuestionAndAnswerTotal(candidate=candidate, total=0, votes=0)
+        question_and_answer_total.save()
+
+        question_and_answer_total = QuestionAndAnswerTotal.objects.get(candidate__candidate__id=idx)
+
+    for each in QuestionAndAnswer.objects.filter(candidate__candidate__id=idx):
         counter += 1
-
         total += each.total
+        logger.info('q&a total: ', total)
 
-    question_and_answer_total = QuestionAndAnswerTotal.objects.get(candidate__id=idx)
     question_and_answer_total.candidate = RankSix.objects.get(candidate__id=idx)
     question_and_answer_total.total = total / counter
     question_and_answer_total.votes = counter
@@ -591,25 +597,29 @@ def top_candidates(request):
 
 
 def pageant_result_compute_total(idx):
-    pageant_result_object = PageantResult.objects.get(candidate__id=idx)
-    pn = PageantNight.objects.get(idx)
-    qa = QuestionAndAnswerTotal.objects.get(idx)
-    pageant_result_object.votes = qa.votes
-    pageant_result_object.pageant_night = pn.total
-    pageant_result_object.question_and_answer = qa.total
-    pageant_result_object.total = (pn.total / 100.0000 * 40) + (qa.total / 100.0000 * 60)
+    logger.info('im alive presult')
+
+    try:
+        pageant_result_object = PageantResult.objects.get(candidate__candidate__id=idx)
+    except PageantResult.DoesNotExist:
+        candidate = RankSix.objects.get(candidate__id=idx)
+        pageant_result_object = PageantResult(candidate=candidate, pageant_night=0, question_and_answer=0, total=0,
+                                              votes=0)
+        pageant_result_object.save()
+
+        pageant_result_object = PageantResult.objects.get(candidate__candidate__id=idx)
+
+    pageant_night = PageantNight.objects.get(candidate__id=idx)
+    question_and_answer = QuestionAndAnswerTotal.objects.get(candidate__candidate__id=idx)
+    pageant_result_object.votes = question_and_answer.votes
+    pageant_result_object.pageant_night = pageant_night.total
+    pageant_result_object.question_and_answer = question_and_answer.total
+    pageant_result_object.total = (pageant_night.total / 100.0000 * 40) + (question_and_answer.total / 100.0000 * 60)
     pageant_result_object.save()
-
-
-def create_pageant_result():
-    for each in RankSix.objects.all().order_by('-total'):
-        candidate = each.candidate
-
-        pr = PageantResult(candidate=candidate, pageant_night=0, question_and_answer=0, total=0, votes=0)
-        pr.save()
 
 
 @login_required(login_url='admin:login')
 def pageant_result_overview(request):
     data = PageantResult.objects.all().order_by('-total')
-    return render(request, 'candidates/pageant_result_overview.html', {'data': data})
+    logger.info(data)
+    return render(request, 'candidates/pageant_result_overview.html', {'data': data })

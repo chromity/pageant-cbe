@@ -10,7 +10,7 @@
     <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Question and Answer Data Overview</h2>
 </div>
 
-<a id="btn-transact" class="btn btn-x btn-t-x" href="{% url 'candidates:question_and_answer_add' %}">Judge Candidate</a>
+<a id="btn-transact" class="btn btn-x btn-t-x" href="{% url 'candidates:question_and_answer_list' %}">Add Data</a>
 
 <div class="row" id="table-content">
     <h3 class="table-label-x">Female Candidates</h3>
@@ -28,11 +28,11 @@
         {% for each in data %}
         {% if each.candidate.candidate.sex == 'Female' %}
         <tr>
-            <th scope="row">{{ each.candidate.idx }}</th>
+            <th scope="row">{{ each.candidate.candidate.idx }}</th>
             <td>{{ each.candidate.candidate.first_name }}<span> </span>{{ each.candidate.candidate.last_name }}</td>
             <td>{{ each.candidate.candidate.program }}</td>
             <td>{{ each.total }}</td>
-            <td>{{ each.votes }}></td>
+            <td>{{ each.votes }}</td>
         </tr>
         {% endif %}
         {% endfor %}
@@ -55,7 +55,7 @@
         {% for each in data %}
         {% if each.candidate.candidate.sex == 'Male' %}
         <tr>
-            <th scope="row">{{ each.candidate.idx }}</th>
+            <th scope="row">{{ each.candidate.candidate.idx }}</th>
             <td>{{ each.candidate.candidate.first_name }}<span> </span>{{ each.candidate.candidate.last_name }}</td>
             <td>{{ each.candidate.candidate.program }}</td>
             <td>{{ each.total }}</td>

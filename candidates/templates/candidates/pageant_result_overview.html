@@ -28,11 +28,11 @@
         </thead>
         <tbody>
         {% for each in data %}
-        {% if each.candidate.sex == 'Female' %}
+        {% if each.candidate.candidate.sex == 'Female' %}
         <tr>
-            <th scope="row">{{ each.candidate.idx }}</th>
-            <td>{{ each.candidate.first_name }}<span> </span>{{ each.candidate.last_name }}</td>
-            <td>{{ each.candidate.program }}</td>
+            <th scope="row">{{ each.candidate.candidate.idx }}</th>
+            <td>{{ each.candidate.candidate.first_name }}<span> </span>{{ each.candidate.candidate.last_name }}</td>
+            <td>{{ each.candidate.candidate.program }}</td>
             <td>{{ each.pageant_night }}</td>
             <td>{{ each.question_and_answer }}</td>
             <td>{{ each.votes }}</td>
@@ -59,11 +59,11 @@
         </thead>
         <tbody>
         {% for each in data %}
-        {% if each.candidate.sex == 'Male' %}
+        {% if each.candidate.candidate.sex == 'Male' %}
         <tr>
-            <th scope="row">{{ each.candidate.idx }}</th>
-            <td>{{ each.candidate.first_name }}<span> </span>{{ each.candidate.last_name }}</td>
-            <td>{{ each.candidate.program }}</td>
+            <th scope="row">{{ each.candidate.candidate.idx }}</th>
+            <td>{{ each.candidate.candidate.first_name }}<span> </span>{{ each.candidate.candidate.last_name }}</td>
+            <td>{{ each.candidate.candidate.program }}</td>
             <td>{{ each.pageant_night }}</td>
             <td>{{ each.question_and_answer }}</td>
             <td>{{ each.votes }}</td>
