@@ -64,6 +64,8 @@ def pre_pageant_edit(request, pk):
                 prepageant.corporate_attire / 100.0000 * 20 +
                 prepageant.panel_interview / 100.0000 * 20)
             prepageant.save()
+
+            pre_pageant_compute_total(request.POST['candidate'])
             return redirect('candidates:pre_pageant_detail', pk=prepageant.pk)
     else:
         form = PrePageantForm(instance=prepageant)
@@ -299,6 +301,8 @@ def uniform_attire_compute_total(idx):
     uniform_attire_total.save()
 
     pageant_proper_compute_total(idx)
+
+
 
 
 @login_required(login_url='admin:login')
