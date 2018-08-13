@@ -31,24 +31,18 @@ def pre_pageant_add(request):
     if request.method == "POST":
         form = PrePageantForm(request.POST)
 
-        try:
-            PrePageant.objects.get(judge=request.user, candidate__id=request.POST['candidate'])
-        except:
-            if form.is_valid():
-                prepageant = form.save(commit=False)
-                prepageant.judge = request.user
-                prepageant.total = float(
+        if form.is_valid():
+            prepageant = form.save(commit=False)
+            prepageant.judge = request.user
+            prepageant.total = float(
                     prepageant.talent / 100.0000 * 30 +
                     prepageant.essay / 100.0000 * 30 +
                     prepageant.corporate_attire / 100.0000 * 20 +
                     prepageant.panel_interview / 100.0000 * 20)
-                prepageant.save()
+            prepageant.save()
 
-                pre_pageant_compute_total(prepageant.pk)
+            pre_pageant_compute_total(request.POST['candidate'])
             return redirect('candidates:pre_pageant_detail', pk=prepageant.pk)
-
-        form = PrePageantForm
-        return render(request, 'candidates/pre_pageant_add.html', {'form': form})
     else:
         form = PrePageantForm
         return render(request, 'candidates/pre_pageant_add.html', {'form': form})
@@ -76,16 +70,14 @@ def pre_pageant_edit(request, pk):
         return render(request, 'candidates/pre_pageant_edit.html', {'form': form})
 
 
-@login_required(login_url='admin:login')
-def pre_pageant_overview(request):
-    data = PrePageantTotal.objects.all().order_by('-total')
-    return render(request, 'candidates/pre_pageant_overview.html', {'data': data})
-
-
 def pre_pageant_compute_total(idx):
-    counter, corporate_attire, panel_interview, essay, talent, total = 0, 0, 0, 0, 0, 0
+    counter = 0
+    corporate_attire = 0
+    panel_interview = 0
+    essay = 0
+    talent = 0
+    total = 0
 
-    # get all votes of a candidate
     for each in PrePageant.objects.filter(candidate__id=idx):
         counter += 1
 
@@ -95,15 +87,21 @@ def pre_pageant_compute_total(idx):
         talent += each.talent
         total += each.total
 
-    pre_pageant_total = PrePageantTotal.objects.get(candidate__id=idx)
-    pre_pageant_total.candidate = Candidate.objects.get(id=idx)
-    pre_pageant_total.corporate_attire = corporate_attire / counter
-    pre_pageant_total.panel_interview = panel_interview / counter
-    pre_pageant_total.essay = essay / counter
-    pre_pageant_total.talent = talent / counter
-    pre_pageant_total.total = total / counter
-    pre_pageant_total.votes = counter
-    pre_pageant_total.save()
+    pp = PrePageantTotal.objects.get(candidate__id=idx)
+    pp.candidate = Candidate.objects.get(id=idx)
+    pp.corporate_attire = corporate_attire / counter
+    pp.panel_interview = panel_interview / counter
+    pp.essay = essay / counter
+    pp.talent = talent / counter
+    pp.total = total / counter
+    pp.save()
+
+
+
+@login_required(login_url='admin:login')
+def pre_pageant_overview(request):
+    data = PrePageantTotal.objects.all().order_by('-total')
+    return render(request, 'candidates/pre_pageant_overview.html', {'data': data})
 
 
 @login_required(login_url='admin:login')
@@ -123,14 +121,10 @@ def formal_attire_add(request):
     if request.method == "POST":
         form = FormalAttireForm(request.POST)
 
-        try:
-            FormalAttire.objects.get(judge=request.user, candidate__id=request.POST['candidate'])
-        except (FormalAttire.DoesNotExist):
-
-            if form.is_valid():
-                formal_attire = form.save(commit=False)
-                formal_attire.judge = request.user
-                formal_attire.total = float(
+        if form.is_valid():
+            formal_attire = form.save(commit=False)
+            formal_attire.judge = request.user
+            formal_attire.total = float(
                     formal_attire.beauty_and_physique / 100.0000 * 40 +
                     formal_attire.poise_and_elegance / 100.0000 * 30 +
                     formal_attire.confidence / 100.0000 * 20 +
@@ -141,10 +135,6 @@ def formal_attire_add(request):
 
             # return redirect('formal_attire_detail', pk=formal_attire.pk)
             return redirect('candidates:formal_attire_list')
-
-        # if object exists, render form again
-        form = FormalAttireForm
-        return render(request, 'candidates/formal_attire_add.html', {'form': form})
     else:
         form = FormalAttireForm
         return render(request, 'candidates/formal_attire_add.html', {'form': form})
@@ -232,13 +222,10 @@ def uniform_attire_add(request):
     if request.method == "POST":
         form = UniformAttireForm(request.POST)
 
-        try:
-            UniformAttire.objects.get(judge=request.user, candidate__id=request.POST['candidate'])
-        except UniformAttire.DoesNotExist:
-            if form.is_valid():
-                uniform_attire = form.save(commit=False)
-                uniform_attire.judge = request.user
-                uniform_attire.total = float(
+        if form.is_valid():
+            uniform_attire = form.save(commit=False)
+            uniform_attire.judge = request.user
+            uniform_attire.total = float(
                     uniform_attire.poise_and_bearing / 100.0000 * 40 +
                     uniform_attire.personality / 100.0000 * 20 +
                     uniform_attire.beauty / 100.0000 * 20 +
@@ -251,10 +238,6 @@ def uniform_attire_add(request):
 
             # return redirect('formal_attire_detail', pk=formal_attire.pk)
             return redirect('candidates:uniform_attire_list')
-
-        # if object exists, render form again
-        form = UniformAttireForm
-        return render(request, 'candidates/uniform_attire_add.html', {'form': form})
     else:
         form = UniformAttireForm
         return render(request, 'candidates/uniform_attire_add.html', {'form': form})
@@ -344,28 +327,21 @@ def old_street_fashion_attire_add(request):
     if request.method == "POST":
         form = OldStreetFashionAttireForm(request.POST)
 
-        try:
-            OldStreetFashionAttire.objects.get(judge=request.user, candidate__id=request.POST['candidate'])
-        except OldStreetFashionAttire.DoesNotExist:
-            if form.is_valid():
-                old_street_fashion_attire = form.save(commit=False)
-                old_street_fashion_attire.judge = request.user
-                old_street_fashion_attire.total = float(
-                    old_street_fashion_attire.poise_and_bearing / 100.0000 * 40 +
-                    old_street_fashion_attire.personality / 100.0000 * 20 +
-                    old_street_fashion_attire.beauty / 100.0000 * 20 +
-                    old_street_fashion_attire.performance_and_confidence / 100.0000 * 20)
-                old_street_fashion_attire.save()
+        if form.is_valid():
+            old_street_fashion_attire = form.save(commit=False)
+            old_street_fashion_attire.judge = request.user
+            old_street_fashion_attire.total = float(
+                old_street_fashion_attire.poise_and_bearing / 100.0000 * 40 +
+                old_street_fashion_attire.personality / 100.0000 * 20 +
+                old_street_fashion_attire.beauty / 100.0000 * 20 +
+                old_street_fashion_attire.performance_and_confidence / 100.0000 * 20)
+            old_street_fashion_attire.save()
 
             # re-compute total scores
             old_street_fashion_attire_compute_total(request.POST['candidate'])
 
             # return redirect('formal_attire_detail', pk=formal_attire.pk)
             return redirect('candidates:old_street_fashion_attire_list')
-
-        # if object exists, render form again
-        form = OldStreetFashionAttireForm
-        return render(request, 'candidates/old_street_fashion_attire_add.html', {'form': form})
     else:
         form = OldStreetFashionAttireForm
         return render(request, 'candidates/old_street_fashion_attire_add.html', {'form': form})
@@ -455,20 +431,14 @@ def question_and_answer_add(request):
     if request.method == "POST":
         form = QuestionAndAnswerForm(request.POST)
 
-        try:
-            QuestionAndAnswer.objects.get(judge=request.user, candidate__id=request.POST['candidate'])
-        except QuestionAndAnswer.DoesNotExist:
-            if form.is_valid():
-                question_and_answer = form.save(commit=False)
-                question_and_answer.judge = request.user
-                question_and_answer.save()
+        if form.is_valid():
+            question_and_answer = form.save(commit=False)
+            question_and_answer.judge = request.user
+            question_and_answer.save()
 
             question_and_answer_compute_total(request.POST['candidate'])
 
             return redirect('candidates:question_and_answer_list')
-
-        form = QuestionAndAnswerForm
-        return render(request, 'candidates/question_and_answer_add.html', {'form': form})
     else:
         form = QuestionAndAnswerForm
         return render(request, 'candidates/question_and_answer_add.html', {'form': form})
@@ -542,9 +512,9 @@ def question_and_answer_add_all(request):
 
 
 def pageant_proper_compute_total(idx):
-    old_street_fashion = OldStreetFashionAttireTotal.objects.filter(candidate__id=idx)
-    uniform = UniformAttireTotal.objects.filter(candidate__id=idx)
-    formal_attire = FormalAttireTotal.objects.filter(candidate__id=idx)
+    old_street_fashion = OldStreetFashionAttireTotal.objects.get(candidate__id=idx)
+    uniform = UniformAttireTotal.objects.get(candidate__id=idx)
+    formal_attire = FormalAttireTotal.objects.get(candidate__id=idx)
 
     pageant_proper = PageantProper.objects.get(candidate__id=idx)
     pageant_proper.old_street_fashion = old_street_fashion.total
@@ -554,7 +524,7 @@ def pageant_proper_compute_total(idx):
     pageant_proper.uniform_votes = uniform.votes
     pageant_proper.formal_attire_votes = formal_attire.votes
     pageant_proper.total = (formal_attire.total / 100.0000 * 40) + (uniform.total / 100.0000 * 30) + (
-                old_street_fashion.total / 100.0000 * 30)
+            old_street_fashion.total / 100.0000 * 30)
     pageant_proper.save()
 
     pageant_night_compute_total(idx)
@@ -577,18 +547,20 @@ def pageant_night_compute_total(idx):
 
 
 def compute_rank_six():
-    f_counter, m_counter = 0
+    f_counter, m_counter = 0, 0
     RankSix.objects.all().delete()
 
     for x in PageantNight.objects.all().order_by('-total'):
         if x.candidate.sex == 'Female':
             if f_counter < 6:
-                ranker = RankSix(candidate=x.candidate.id)
+                candidate = Candidate.objects.get(id=x.candidate.id)
+                ranker = RankSix(candidate=candidate)
                 ranker.save()
                 f_counter += 1
         if x.candidate.sex == 'Male':
             if m_counter < 6:
-                ranker = RankSix(candidate=x.candidate.id)
+                candidate = Candidate.objects.get(id=x.candidate.id)
+                ranker = RankSix(candidate=candidate)
                 ranker.save()
                 m_counter += 1
 
