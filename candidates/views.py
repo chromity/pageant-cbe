@@ -141,7 +141,7 @@ def formal_attire_edit(request, pk):
             formal_attire_compute_total(request.POST['candidate'])
 
             # return redirect('formal_attire_detail', pk=formal_attire.pk)
-            return redirect('formal_attire_list')
+            return redirect('candidates:formal_attire_list')
     else:
         form = FormalAttireForm(instance=formal_attire)
         return render(request, 'candidates/formal_attire_edit.html', {'form': form})

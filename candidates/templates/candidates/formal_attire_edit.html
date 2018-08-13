@@ -1,9 +1,58 @@
 {% extends 'add.html' %}
+{% load static %}
 
 {% block form %}
-    <h1>Edit Formal Attire Data</h1>
-    <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
+<link href="{% static 'css/add.css' %}" rel="stylesheet"/>
+
+<div class="page-label-box">
+    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Edit Formal Attire Data</h2>
+</div>
+
+<div id="frm-container" style="margin-left: 10vw; margin-top: 10vh;">
+    <form method="POST" class="frm post-form">{% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper form-candidate">
+            {{ form.candidate.errors }}
+            <label style="width: 12vw;" class="form-label" for="{{ form.candidate.id_for_label }}">Candidate</label>
+            {{ form.candidate }}
+        </div>
+
+        <div class="fieldWrapper form-input-text">
+            {{ form.beauty_and_physique.errors }}
+            <label style="width: 12vw;" class="form-label" for="{{ form.beauty_and_physique.id_for_label }}">Beauty and
+                Physique</label>
+            {{ form.beauty_and_physique }}
+        </div>
+
+        <div class="fieldWrapper form-input-text">
+            {{ form.poise_and_elegance.errors }}
+            <label style="width: 12vw;" class="form-label" for="{{ form.poise_and_elegance.id_for_label }}">Poise and
+                Elegance</label>
+            {{ form.poise_and_elegance }}
+        </div>
+
+        <div class="fieldWrapper form-input-text">
+            {{ form.confidence.errors }}
+            <label style="width: 12vw;" class="form-label" for="{{ form.confidence.id_for_label }}">Confidence</label>
+            {{ form.confidence }}
+        </div>
+
+        <div class="fieldWrapper form-input-text">
+            {{ form.stage_presence.errors }}
+            <label style="width: 12vw;" class="form-label" for="{{ form.stage_presence.id_for_label }}">Stage
+                Presence</label>
+            {{ form.stage_presence }}
+        </div>
+
+        <button type="submit" class="save btn btn-x" style="border-radius: 20px; padding: 5px 20px 5px 20px; color: white; margin-left: 0; background: #f857a6; background: -webkit-linear-gradient(to right, #ff5858, #f857a6); background: linear-gradient(to right, #ff5858, #f857a6);">
+            Update
+        </button>
     </form>
+</div>
+
+<style>
+    * {
+        font-weight: 500;
+    }
+</style>
 {% endblock %}
