@@ -1,0 +1,38 @@
+{% extends 'add.html' %}
+{% load static %}
+
+{% block form %}
+<link href="{% static 'css/add.css' %}" rel="stylesheet"/>
+
+<div class="page-label-box">
+    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Edit Question and Answer Data</h2>
+</div>
+
+<div id="frm-container" style="margin-left: 10vw; margin-top: 10vh;">
+    <form method="POST" class="frm post-form">{% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="fieldWrapper form-candidate">
+            {{ form.candidate.errors }}
+            <label style="width: 12vw;" class="form-label" for="{{ form.candidate.id_for_label }}">Candidate</label>
+            {{ form.candidate }}
+        </div>
+
+        <div class="fieldWrapper form-input-text">
+            {{ form.total.errors }}
+            <label style="width: 12vw;" class="form-label" for="{{ form.total.id_for_label }}">Total</label>
+            {{ form.total }}
+        </div>
+
+
+        <button type="submit" class="save btn btn-x" style="border-radius: 20px; padding: 5px 20px 5px 20px; color: white; margin-left: 0; background: #f857a6; background: -webkit-linear-gradient(to right, #ff5858, #f857a6); background: linear-gradient(to right, #ff5858, #f857a6);">
+            Update
+        </button>
+    </form>
+</div>
+
+<style>
+    * {
+        font-weight: 500;
+    }
+</style>
+{% endblock %}

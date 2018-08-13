@@ -7,10 +7,10 @@
 
 
 <div class="page-label-box">
-    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Question and Answer Data Overview</h2>
+    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Pageant Results Overview</h2>
 </div>
 
-<a id="btn-transact" class="btn btn-x btn-t-x" href="{% url 'candidates:question_and_answer_add' %}">Judge Candidate</a>
+<a id="btn-transact" class="btn btn-x btn-t-x" href="{% url 'candidates:index' %}">Go Back To Main Page</a>
 
 <div class="row" id="table-content">
     <h3 class="table-label-x">Female Candidates</h3>
@@ -20,19 +20,23 @@
             <th scope="col" style="width: 3%;">#</th>
             <th scope="col" style="width: 18%;">Name</th>
             <th scope="col" style="width: 10%;">Program</th>
-            <th scope="col" style="width: 5%;">Total</th>
+            <th scope="col" style="width: 12%;">Pageant Night</th>
+            <th scope="col" style="width: 12%;">Question and Answer</th>
             <th scope="col" style="width: 5%;">Votes</th>
+            <th scope="col" style="width: 5%;">Total</th>
         </tr>
         </thead>
         <tbody>
         {% for each in data %}
-        {% if each.candidate.candidate.sex == 'Female' %}
+        {% if each.candidate.sex == 'Female' %}
         <tr>
             <th scope="row">{{ each.candidate.idx }}</th>
-            <td>{{ each.candidate.candidate.first_name }}<span> </span>{{ each.candidate,candidate.last_name }}</td>
-            <td>{{ each.candidate.candidate.program }}</td>
+            <td>{{ each.candidate.first_name }}<span> </span>{{ each.candidate.last_name }}</td>
+            <td>{{ each.candidate.program }}</td>
+            <td>{{ each.pageant_night }}</td>
+            <td>{{ each.question_and_answer }}</td>
+            <td>{{ each.votes }}</td>
             <td>{{ each.total }}</td>
-            <td>{{ each.votes }}></td>
         </tr>
         {% endif %}
         {% endfor %}
@@ -47,24 +51,27 @@
             <th scope="col" style="width: 3%;">#</th>
             <th scope="col" style="width: 18%;">Name</th>
             <th scope="col" style="width: 10%;">Program</th>
-            <th scope="col" style="width: 5%;">Total</th>
+            <th scope="col" style="width: 12%;">Pageant Night</th>
+            <th scope="col" style="width: 12%;">Question and Answer</th>
             <th scope="col" style="width: 5%;">Votes</th>
+            <th scope="col" style="width: 5%;">Total</th>
         </tr>
         </thead>
         <tbody>
         {% for each in data %}
-        {% if each.candidate.candidate.sex == 'Male' %}
+        {% if each.candidate.sex == 'Male' %}
         <tr>
             <th scope="row">{{ each.candidate.idx }}</th>
-            <td>{{ each.candidate.candidate.first_name }}<span> </span>{{ each.candidate,candidate.last_name }}</td>
-            <td>{{ each.candidate.candidate.program }}</td>
-            <td>{{ each.total }}</td>
+            <td>{{ each.candidate.first_name }}<span> </span>{{ each.candidate.last_name }}</td>
+            <td>{{ each.candidate.program }}</td>
+            <td>{{ each.pageant_night }}</td>
+            <td>{{ each.question_and_answer }}</td>
             <td>{{ each.votes }}</td>
+            <td>{{ each.total }}</td>
         </tr>
         {% endif %}
         {% endfor %}
         </tbody>
     </table>
-
 </div>
 {% endblock %}

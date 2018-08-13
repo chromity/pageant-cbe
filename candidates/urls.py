@@ -5,6 +5,10 @@ from . import views
 app_name = 'candidates'
 urlpatterns = [
     path('', views.index, name='index'),
+    path('pageant_proper_overview/', views.pageant_proper_overview, name='pageant_proper_overview'),
+    path('pageant_night_overview/', views.pageant_night_overview, name='pageant_night_overview'),
+    path('top_candidates/', views.top_candidates, name='top_candidates'),
+    path('pageant_result_overview/', views.pageant_result_overview, name='pageant_result_overview'),
     path('pre_pageant/list', views.pre_pageant_list, name='pre_pageant_list'),
     path('pre_pageant/<int:pk>/', views.pre_pageant_detail, name='pre_pageant_detail'),
     path('pre_pageant/<int:pk>/edit/', views.pre_pageant_edit, name='pre_pageant_edit'),

@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+<link href="{% static 'css/detail.css' %}" rel="stylesheet"/>
+
+{% block content %}
+<div class="page-label-box">
+    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Question and Answer Data Detail</h2>
+</div>
+
+<div class="detail-content">
+    {% if data %}
+    <div class="details-candidate">
+        <div>
+            <h6 class="detail-label">Number</h6>
+            <p class="detail-data">{{ data.candidate.candidate.idx }}</p>
+        </div>
+        <div>
+            <h6 class="detail-label">Name</h6>
+            <p class="detail-data">{{ data.candidate.candidate.first_name }}<span> </span>{{ data.candidate.candidate.last_name }}</p>
+        </div>
+        <div>
+            <h6 class="detail-label">Program</h6>
+            <p class="detail-data">{{ data.candidate.candidate.program }}</p>
+        </div>
+    </div>
+    <div class="details-score">
+        <div>
+            <h6 class="detail-label">Total</h6>
+            <p class="detail-data">{{ data.total }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <a id="btn-transact" class="btn btn-x" href="{% url 'candidates:question_and_answer_edit' pk=data.pk %}">Edit
+        Question And Answer Data</a>
+</div>
+
+
+{% endblock %}
