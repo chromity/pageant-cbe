@@ -172,7 +172,7 @@ class RankSix(models.Model):
 
 
 class QuestionAndAnswer(models.Model):
-    candidate = models.ForeignKey(Candidate, on_delete=models.CASCADE)
+    candidate = models.ForeignKey(RankSix, on_delete=models.CASCADE)
     judge = models.ForeignKey(User, on_delete=models.CASCADE)
     total = models.FloatField(validators=[MaxValueValidator(100), MinValueValidator(0)])
 

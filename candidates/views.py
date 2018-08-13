@@ -304,7 +304,6 @@ def uniform_attire_compute_total(idx):
 
 
 
-
 @login_required(login_url='admin:login')
 def uniform_attire_add_all(request):
     pass
@@ -482,7 +481,7 @@ def question_and_answer_overview(request):
         except PageantResult.DoesNotExist:
             create_pageant_result()
 
-        data = QuestionAndAnswerTotal.objects.all().sort_by('-total')
+        data = QuestionAndAnswerTotal.objects.all().order_by('-total')
         return render(request, 'candidates/question_and_answer_overview.html', {'data': data})
     else:
         data = incomplete
@@ -492,13 +491,13 @@ def question_and_answer_overview(request):
 def question_and_answer_compute_total(idx):
     counter, total = 0, 0
 
-    for each in QuestionAndAnswerTotal.objects.filter(candidate__candidate__id=idx):
+    for each in QuestionAndAnswerTotal.objects.filter(candidate__id=idx):
         counter += 1
 
         total += each.total
 
-    question_and_answer_total = QuestionAndAnswerTotal.objects.get(candidate__candidate__id=idx)
-    question_and_answer_total.candidate = RankSix.object.get(id=idx)
+    question_and_answer_total = QuestionAndAnswerTotal.objects.get(candidate__id=idx)
+    question_and_answer_total.candidate = RankSix.objects.get(candidate__id=idx)
     question_and_answer_total.total = total / counter
     question_and_answer_total.votes = counter
     question_and_answer_total.save()
@@ -521,14 +520,18 @@ def pageant_proper_compute_total(idx):
     formal_attire = FormalAttireTotal.objects.get(candidate__id=idx)
 
     pageant_proper = PageantProper.objects.get(candidate__id=idx)
+
     pageant_proper.old_street_fashion = old_street_fashion.total
     pageant_proper.uniform = uniform.total
     pageant_proper.formal_attire = formal_attire.total
+
     pageant_proper.old_street_fashion_votes = old_street_fashion.votes
     pageant_proper.uniform_votes = uniform.votes
     pageant_proper.formal_attire_votes = formal_attire.votes
+
     pageant_proper.total = (formal_attire.total / 100.0000 * 40) + (uniform.total / 100.0000 * 30) + (
             old_street_fashion.total / 100.0000 * 30)
+
     pageant_proper.save()
 
     pageant_night_compute_total(idx)
@@ -571,13 +574,13 @@ def compute_rank_six():
 
 @login_required(login_url='admin:login')
 def pageant_proper_overview(request):
-    data = PageantProper.objects.all()
+    data = PageantProper.objects.all().order_by('-total')
     return render(request, 'candidates/pageant_proper_overview.html', {'data': data})
 
 
 @login_required(login_url='admin:login')
 def pageant_night_overview(request):
-    data = PageantNight.objects.all()
+    data = PageantNight.objects.all().order_by('-total')
     return render(request, 'candidates/pageant_night_overview.html', {'data': data})
 
 

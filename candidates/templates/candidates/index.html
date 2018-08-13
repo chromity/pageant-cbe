@@ -2,71 +2,77 @@
 {% load static %}
 
 {% block content %}
-<link href="{% static 'css/add.css' %}" rel="stylesheet"/>
-<div>
-    <div style="margin-bottom: 25px;">
-        <div class="page-label-box">
-            <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Pageant Segments</h2>
+    <link href="{% static 'css/add.css' %}" rel="stylesheet"/>
+    <div>
+        <div style="margin-bottom: 25px;">
+            <div class="page-label-box">
+                <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Pageant Segments</h2>
+            </div>
+        </div>
+
+        <div class="cnt">
+            <a class="x" href="{% url 'candidates:pre_pageant_overview' %}">
+                <div id="pp">
+                    <h3 class="box-label">Pre-Pageant</h3>
+                </div>
+            </a>
+
+            <a class="x" href="{% url 'candidates:old_street_fashion_attire_overview' %}">
+                <div id="osfa">
+                    <h3 class="box-label">Old Street</h3>
+                </div>
+            </a>
+
+            <a class="x" href="{% url 'candidates:uniform_attire_overview' %}">
+                <div id="ufa">
+                    <h3 class="box-label">Uniform Attire</h3>
+                </div>
+            </a>
+
+            <a class="x" href="{% url 'candidates:formal_attire_overview' %}">
+                <div id="fa">
+                    <h3 class="box-label">Formal Attire</h3>
+                </div>
+            </a>
+
+            <a class="x" href="{% url 'candidates:question_and_answer_overview' %}">
+                <div id="fa">
+                    <h3 class="box-label">Q & A</h3>
+                </div>
+            </a>
         </div>
     </div>
 
-    <div class="cnt">
-        <a class="x" href="{% url 'candidates:pre_pageant_overview' %}">
-            <div id="pp">
-                <h3 class="box-label">Pre-Pageant</h3>
+    <div>
+        <div style="margin-bottom: 25px;">
+            <div class="page-label-box-x">
+                <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Results</h2>
             </div>
-        </a>
+        </div>
 
-        <a class="x" href="{% url 'candidates:old_street_fashion_attire_overview' %}">
-            <div id="osfa">
-                <h3 class="box-label">Old Street</h3>
-            </div>
-        </a>
+        <div class="cnt">
+            <a class="x" href="{% url 'candidates:pageant_proper_overview' %}">
+                <div id="pp">
+                    <h3 class="box-label">Pageant Proper</h3>
+                </div>
+            </a>
+            <a class="x" href="{% url 'candidates:pageant_night_overview' %}">
+                <div id="osfa">
+                    <h3 class="box-label">Pageant Night</h3>
+                </div>
+            </a>
 
-        <a class="x" href="{% url 'candidates:uniform_attire_overview' %}">
-            <div id="ufa">
-                <h3 class="box-label">Uniform Attire</h3>
-            </div>
-        </a>
+            <a class="x" href="{% url 'candidates:top_candidates' %}">
+                <div id="ufa">
+                    <h3 class="box-label">Top Candidates</h3>
+                </div>
+            </a>
 
-        <a class="x" href="{% url 'candidates:formal_attire_overview' %}">
-            <div id="fa">
-                <h3 class="box-label">Formal Attire</h3>
-            </div>
-        </a>
-    </div>
-</div>
-
-<div>
-    <div style="margin-bottom: 25px;">
-        <div class="page-label-box-x">
-            <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Results</h2>
+            <a class="x" href="{% url 'candidates:pageant_result_overview' %}">
+                <div id="fa">
+                    <h3 class="box-label">Pageant Results</h3>
+                </div>
+            </a>
         </div>
     </div>
-
-    <div class="cnt">
-        <a class="x" href="{% url 'candidates:pageant_proper_overview' %}">
-            <div id="pp">
-                <h3 class="box-label">Pageant Proper</h3>
-            </div>
-        </a>
-        <a class="x" href="{% url 'candidates:pageant_night_overview' %}">
-            <div id="osfa">
-                <h3 class="box-label">Pageant Night</h3>
-            </div>
-        </a>
-
-        <a class="x" href="{% url 'candidates:top_candidates' %}">
-            <div id="ufa">
-                <h3 class="box-label">Top Candidates</h3>
-            </div>
-        </a>
-
-        <a class="x" href="{% url 'candidates:pageant_result_overview' %}">
-            <div id="fa">
-                <h3 class="box-label">Pageant Results</h3>
-            </div>
-        </a>
-    </div>
-</div>
 {% endblock %}
