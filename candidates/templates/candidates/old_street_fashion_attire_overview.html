@@ -1,0 +1,86 @@
+{% extends 'add.html' %}
+{% load static %}
+
+
+{% block form %}
+<link href="{% static 'css/add.css' %}" rel="stylesheet"/>
+
+
+<div class="page-label-box">
+    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Old Street Fashion Attire Data Overview</h2>
+</div>
+
+<a id="btn-transact" class="btn btn-x btn-t-x" href="{% url 'candidates:old_street_fashion_attire_list' %}">Add Data</a>
+
+<div class="row" id="table-content">
+    <h3 class="table-label-x">Female Candidates</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col" style="width: 3%;">#</th>
+            <th scope="col" style="width: 18%;">Name</th>
+            <th scope="col" style="width: 10%;">Program</th>
+            <th scope="col" style="width: 12%;">Poise and Bearing</th>
+            <th scope="col" style="width: 12%;">Personality</th>
+            <th scope="col" style="width: 10%;">Beauty</th>
+            <th scope="col" style="width: 10%;">Performance and Confidence</th>
+            <th scope="col" style="width: 5%;">Total</th>
+            <th scope="col" style="width: 5%;">Votes</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for each in data %}
+        {% if each.candidate.sex == 'Female' %}
+        <tr>
+            <th scope="row">{{ each.candidate.idx }}</th>
+            <td>{{ each.candidate.first_name }}<span> </span>{{ each.candidate.last_name }}</td>
+            <td>{{ each.candidate.program }}</td>
+            <td>{{ each.poise_and_bearing }}</td>
+            <td>{{ each.personality }}</td>
+            <td>{{ each.beauty }}</td>
+            <td>{{ each.performance_and_confidence }}</td>
+            <td>{{ each.total }}</td>
+            <td>{{ each.votes }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+    <h3 class="table-label-x table-label-male">Male Candidates</h3>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col" style="width: 3%;">#</th>
+            <th scope="col" style="width: 18%;">Name</th>
+            <th scope="col" style="width: 10%;">Program</th>
+            <th scope="col" style="width: 12%;">Poise and Bearing</th>
+            <th scope="col" style="width: 12%;">Personality</th>
+            <th scope="col" style="width: 10%;">Beauty</th>
+            <th scope="col" style="width: 10%;">Performance and Confidence</th>
+            <th scope="col" style="width: 5%;">Total</th>
+            <th scope="col" style="width: 5%;">Votes</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for each in data %}
+        {% if each.candidate.sex == 'Male' %}
+        <tr>
+            <th scope="row">{{ each.candidate.idx }}</th>
+            <td>{{ each.candidate.first_name }}<span> </span>{{ each.candidate.last_name }}</td>
+            <td>{{ each.candidate.program }}</td>
+            <td>{{ each.poise_and_bearing }}</td>
+            <td>{{ each.personality }}</td>
+            <td>{{ each.beauty }}</td>
+            <td>{{ each.performance_and_confidence }}</td>
+            <td>{{ each.total }}</td>
+            <td>{{ each.votes }}</td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+{% endblock %}

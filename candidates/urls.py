@@ -17,10 +17,10 @@ urlpatterns = [
     path('old_street_fashion_attire/<int:pk>/edit/', views.old_street_fashion_attire_edit,
          name='old_street_fashion_attire_edit'),
     path('old_street_fashion_attire/add', views.old_street_fashion_attire_add, name='old_street_fashion_attire_add'),
-    path('old_street_fashion/', views.old_street_fashion_attire_overview,
+    path('old_street_fashion_attire/', views.old_street_fashion_attire_overview,
          name='old_street_fashion_attire_overview'),
-    path('old_street_fashion/add_all', views.old_street_fashion_attire_add_all, name='old_street_fashion_add_all'),
-    path('old_street_fashion_add_all_logic', views.old_street_fashion_attire_add_all_logic,
+    path('old_street_fashion_attire/add_all', views.old_street_fashion_attire_add_all, name='old_street_fashion_add_all'),
+    path('old_street_fashion_attire_add_all_logic', views.old_street_fashion_attire_add_all_logic,
          name='old_street_fashion_add_all_logic'),
 
     path('formal_attire/list', views.formal_attire_list, name='formal_attire_list'),

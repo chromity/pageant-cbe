@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+<link href="{% static 'css/detail.css' %}" rel="stylesheet"/>
+
+{% block content %}
+<div class="page-label-box">
+    <h2 class="page-label">|<span style="padding-right: 8px;">  </span>Old Street Fashion Attire Data Detail</h2>
+</div>
+
+<div class="detail-content">
+    {% if data %}
+    <div class="details-candidate">
+        <div>
+            <h6 class="detail-label">Number</h6>
+            <p class="detail-data">{{ data.candidate.idx }}</p>
+        </div>
+        <div>
+            <h6 class="detail-label">Name</h6>
+            <p class="detail-data">{{ data.candidate.first_name }}<span> </span>{{ data.candidate.last_name }}</p>
+        </div>
+        <div>
+            <h6 class="detail-label">Program</h6>
+            <p class="detail-data">{{ data.candidate.program }}</p>
+        </div>
+    </div>
+    <div class="details-score">
+    <div>
+        <h6 class="detail-label">Poise and Bearing</h6>
+        <p class="detail-data">{{ data.poise_and_bearing }}</p>
+    </div>
+    <div>
+        <h6 class="detail-label">Personality</h6>
+        <p class="detail-data">{{ data.personality }}</p>
+    </div>
+    <div>
+        <h6 class="detail-label">Beauty</h6>
+        <p class="detail-data">{{ data.beauty }}</p>
+    </div>
+    <div>
+        <h6 class="detail-label">Performance and Confidence</h6>
+        <p class="detail-data">{{ data.performance_and_confidence }}</p>
+    </div>
+    <div>
+        <h6 class="detail-label">Total</h6>
+        <p class="detail-data">{{ data.total }}</p>
+    </div></div>
+    {% endif %}
+
+    <a id="btn-transact" class="btn btn-x" href="{% url 'candidates:old_street_fashion_attire_edit' pk=data.pk %}">Edit Uniform Attire Data</a>
+</div>
+
+
+{% endblock %}

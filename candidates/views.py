@@ -298,22 +298,103 @@ def uniform_attire_add_all_logic(request):
 
 @login_required(login_url='admin:login')
 def old_street_fashion_attire_list(request):
-    pass
+    data = OldStreetFashionAttire.objects.filter(judge=request.user).order_by('-total')
+    return render(request, 'candidates/old_street_fashion_attire_list.html', {'data': data})
 
 
 @login_required(login_url='admin:login')
 def old_street_fashion_attire_detail(request, pk):
-    pass
+    data = get_object_or_404(OldStreetFashionAttire, pk=pk)
+    return render(request, 'candidates/old_street_fashion_attire_detail.html', {'data': data})
 
 
 @login_required(login_url='admin:login')
 def old_street_fashion_attire_add(request):
-    pass
+    if request.method == "POST":
+        form = OldStreetFashionAttireForm(request.POST)
+
+        try:
+            OldStreetFashionAttire.objects.get(judge=request.user, candidate__id=request.POST['candidate'])
+        except OldStreetFashionAttire.DoesNotExist:
+            if form.is_valid():
+                old_street_fashion_attire = form.save(commit=False)
+                old_street_fashion_attire.judge = request.user
+                old_street_fashion_attire.total = float(
+                    old_street_fashion_attire.poise_and_bearing / 100.0000 * 40 +
+                    old_street_fashion_attire.personality / 100.0000 * 20 +
+                    old_street_fashion_attire.beauty / 100.0000 * 20 +
+                    old_street_fashion_attire.performance_and_confidence / 100.0000 * 20)
+
+            old_street_fashion_attire.save()
+
+            # re-compute total scores
+            old_street_fashion_attire_compute_total(request.POST['candidate'])
+
+            # return redirect('formal_attire_detail', pk=formal_attire.pk)
+            return redirect('candidates:old_street_fashion_attire_list')
+
+        # if object exists, render form again
+        form = OldStreetFashionAttireForm
+        return render(request, 'candidates/old_street_fashion_attire_add.html', {'form': form})
+    else:
+        form = OldStreetFashionAttireForm
+        return render(request, 'candidates/old_street_fashion_attire_add.html', {'form': form})
 
 
 @login_required(login_url='admin:login')
 def old_street_fashion_attire_edit(request, pk):
-    pass
+    old_street_fashion_attire = get_object_or_404(OldStreetFashionAttire, pk=pk)
+
+    if request.method == "POST":
+        form = OldStreetFashionAttireForm(request.POST, instance=old_street_fashion_attire)
+
+        if form.is_valid():
+            old_street_fashion_attire = form.save(commit=False)
+            old_street_fashion_attire.judge = request.user
+            old_street_fashion_attire.total = float(
+                old_street_fashion_attire.poise_and_bearing / 100.0000 * 40 +
+                old_street_fashion_attire.personality / 100.0000 * 20 +
+                old_street_fashion_attire.beauty / 100.0000 * 20 +
+                old_street_fashion_attire.performance_and_confidence / 100.0000 * 20)
+            old_street_fashion_attire.save()
+
+            old_street_fashion_attire_compute_total(request.POST['candidate'])
+
+            # return redirect('old_street_fashion_attire_detail', pk=old_street_fashion_attire.pk)
+            return redirect('candidates:old_street_fashion_attire_list')
+    else:
+        form = OldStreetFashionAttireForm(instance=old_street_fashion_attire)
+        return render(request, 'candidates/old_street_fashion_attire_edit.html', {'form': form})
+
+
+@login_required(login_url='admin:login')
+def old_street_fashion_attire_overview(request):
+    data = OldStreetFashionAttireTotal.objects.all().order_by('-total')
+    return render(request, 'candidates/old_street_fashion_attire_overview.html', {'data': data})
+
+
+def old_street_fashion_attire_compute_total(idx):
+    counter, poise_and_bearing, personality, beauty, performance_and_confidence, total = 0, 0, 0, 0, 0, 0
+
+    # get all votes of a candidate
+    for each in OldStreetFashionAttire.objects.filter(candidate__id=idx):
+        counter += 1
+
+        poise_and_bearing += each.poise_and_bearing
+        personality += each.personality
+        beauty += each.beauty
+        performance_and_confidence += each.performance_and_confidence
+        total += each.total
+
+    old_street_fashion_attire_total = OldStreetFashionAttireTotal.objects.get(candidate__id=idx)
+    old_street_fashion_attire_total.candidate = Candidate.objects.get(id=idx)
+    old_street_fashion_attire_total.poise_and_bearing = poise_and_bearing / counter
+    old_street_fashion_attire_total.personality = personality / counter
+    old_street_fashion_attire_total.beauty = beauty / counter
+    old_street_fashion_attire_total.performance_and_confidence = performance_and_confidence / counter
+    old_street_fashion_attire_total.total = total / counter
+    old_street_fashion_attire_total.votes = counter
+    old_street_fashion_attire_total.save()
 
 
 @login_required(login_url='admin:login')
@@ -321,16 +402,7 @@ def old_street_fashion_attire_add_all(request):
     pass
 
 
-@login_required(login_url='admin:login')
-def old_street_fashion_attire_overview(request):
-    pass
-
-
 def old_street_fashion_attire_add_all_logic(request):
-    pass
-
-
-def old_street_fashion_attire_compute_total():
     pass
 
 
