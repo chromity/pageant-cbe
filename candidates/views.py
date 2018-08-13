@@ -31,20 +31,24 @@ def pre_pageant_add(request):
     if request.method == "POST":
         form = PrePageantForm(request.POST)
 
-        if PrePageant.objects.get(judge=request.user, candidate__id=request.POST['candidate']):
-            form = PrePageantForm
-            return render(request, 'candidates/pre_pageant_add.html', {'form': form})
+        try:
+            PrePageant.objects.get(judge=request.user, candidate__id=request.POST['candidate'])
+        except:
+            if form.is_valid():
+                prepageant = form.save(commit=False)
+                prepageant.judge = request.user
+                prepageant.total = float(
+                    prepageant.talent / 100.0000 * 30 +
+                    prepageant.essay / 100.0000 * 30 +
+                    prepageant.corporate_attire / 100.0000 * 20 +
+                    prepageant.panel_interview / 100.0000 * 20)
+                prepageant.save()
 
-        if form.is_valid():
-            prepageant = form.save(commit=False)
-            prepageant.judge = request.user
-            prepageant.total = float(
-                prepageant.talent / 100.0000 * 30 +
-                prepageant.essay / 100.0000 * 30 +
-                prepageant.corporate_attire / 100.0000 * 20 +
-                prepageant.panel_interview / 100.0000 * 20)
-            prepageant.save()
-            return redirect('pre_pageant_detail', pk=prepageant.pk)
+                pre_pageant_compute_total(prepageant.pk)
+            return redirect('candidates:pre_pageant_detail', pk=prepageant.pk)
+
+        form = PrePageantForm
+        return render(request, 'candidates/pre_pageant_add.html', {'form': form})
     else:
         form = PrePageantForm
         return render(request, 'candidates/pre_pageant_add.html', {'form': form})
@@ -66,7 +70,7 @@ def pre_pageant_edit(request, pk):
                 prepageant.corporate_attire / 100.0000 * 20 +
                 prepageant.panel_interview / 100.0000 * 20)
             prepageant.save()
-            return redirect('pre_pageant_detail', pk=prepageant.pk)
+            return redirect('candidates:pre_pageant_detail', pk=prepageant.pk)
     else:
         form = PrePageantForm(instance=prepageant)
         return render(request, 'candidates/pre_pageant_edit.html', {'form': form})
@@ -76,6 +80,30 @@ def pre_pageant_edit(request, pk):
 def pre_pageant_overview(request):
     data = PrePageantTotal.objects.all().order_by('-total')
     return render(request, 'candidates/pre_pageant_overview.html', {'data': data})
+
+
+def pre_pageant_compute_total(idx):
+    counter, corporate_attire, panel_interview, essay, talent, total = 0, 0, 0, 0, 0, 0
+
+    # get all votes of a candidate
+    for each in PrePageant.objects.filter(candidate__id=idx):
+        counter += 1
+
+        corporate_attire += each.corporate_attire
+        panel_interview += each.panel_interview
+        essay += each.essay
+        talent += each.talent
+        total += each.total
+
+    pre_pageant_total = PrePageantTotal.objects.get(candidate__id=idx)
+    pre_pageant_total.candidate = Candidate.objects.get(id=idx)
+    pre_pageant_total.corporate_attire = corporate_attire / counter
+    pre_pageant_total.panel_interview = panel_interview / counter
+    pre_pageant_total.essay = essay / counter
+    pre_pageant_total.talent = talent / counter
+    pre_pageant_total.total = total / counter
+    pre_pageant_total.votes = counter
+    pre_pageant_total.save()
 
 
 @login_required(login_url='admin:login')
