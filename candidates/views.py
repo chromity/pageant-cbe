@@ -111,7 +111,7 @@ def formal_attire_add(request):
             formal_attire_compute_total(request.POST['candidate'])
 
             # return redirect('formal_attire_detail', pk=formal_attire.pk)
-            return redirect('formal_attire_list')
+            return redirect('candidates:formal_attire_list')
 
         # if object exists, render form again
         form = FormalAttireForm
@@ -153,11 +153,11 @@ def formal_attire_overview(request):
     return render(request, 'candidates/formal_attire_overview.html', {'data': data})
 
 
-def formal_attire_compute_total(id):
+def formal_attire_compute_total(idx):
     counter, beauty_and_physique, poise_and_elegance, confidence, stage_presence, total = 0, 0, 0, 0, 0, 0
 
     # get all votes of a candidate
-    for each in FormalAttire.objects.filter(candidate__id=id):
+    for each in FormalAttire.objects.filter(candidate__id=idx):
         counter += 1
 
         beauty_and_physique += each.beauty_and_physique
@@ -166,8 +166,8 @@ def formal_attire_compute_total(id):
         stage_presence += each.stage_presence
         total += each.total
 
-    formal_attire_total = FormalAttireTotal.objects.get(candidate__id=id)
-    formal_attire_total.candidate = Candidate.objects.get(id=id)
+    formal_attire_total = FormalAttireTotal.objects.get(candidate__id=idx)
+    formal_attire_total.candidate = Candidate.objects.get(id=idx)
     formal_attire_total.beauty_and_physique = beauty_and_physique / counter
     formal_attire_total.poise_and_elegance = poise_and_elegance / counter
     formal_attire_total.confidence = confidence / counter
@@ -188,22 +188,103 @@ def formal_attire_add_all_logic(request):
 
 @login_required(login_url='admin:login')
 def uniform_attire_list(request):
-    pass
+    data = UniformAttire.objects.filter(judge=request.user).order_by('-total')
+    return render(request, 'candidates/uniform_attire_list.html', {'data': data})
 
 
 @login_required(login_url='admin:login')
 def uniform_attire_detail(request, pk):
-    pass
+    data = get_object_or_404(UniformAttire, pk=pk)
+    return render(request, 'candidates/uniform_attire_detail.html', {'data': data})
 
 
 @login_required(login_url='admin:login')
 def uniform_attire_add(request):
-    pass
+    if request.method == "POST":
+        form = UniformAttireForm(request.POST)
+
+        try:
+            UniformAttire.objects.get(judge=request.user, candidate__id=request.POST['candidate'])
+        except UniformAttire.DoesNotExist:
+            if form.is_valid():
+               uniform_attire = form.save(commit=False)
+               uniform_attire.judge = request.user
+               uniform_attire.total = float(
+                    uniform_attire.poise_and_bearing / 100.0000 * 40 +
+                    uniform_attire.personality / 100.0000 * 20 +
+                    uniform_attire.beauty / 100.0000 * 20 +
+                    uniform_attire.performance_and_confidence / 100.0000 * 20)
+
+            uniform_attire.save()
+
+            # re-compute total scores
+            uniform_attire_compute_total(request.POST['candidate'])
+
+            # return redirect('formal_attire_detail', pk=formal_attire.pk)
+            return redirect('candidates:uniform_attire_list')
+
+        # if object exists, render form again
+        form = UniformAttireForm
+        return render(request, 'candidates/uniform_attire_add.html', {'form': form})
+    else:
+        form = UniformAttireForm
+        return render(request, 'candidates/uniform_attire_add.html', {'form': form})
 
 
 @login_required(login_url='admin:login')
 def uniform_attire_edit(request, pk):
-    pass
+    uniform_attire = get_object_or_404(UniformAttire, pk=pk)
+
+    if request.method == "POST":
+        form = UniformAttireForm(request.POST, instance=uniform_attire)
+
+        if form.is_valid():
+            uniform_attire = form.save(commit=False)
+            uniform_attire.judge = request.user
+            uniform_attire.total = float(
+                uniform_attire.poise_and_bearing / 100.0000 * 40 +
+                uniform_attire.personality / 100.0000 * 20 +
+                uniform_attire.beauty / 100.0000 * 20 +
+                uniform_attire.performance_and_confidence / 100.0000 * 20)
+            uniform_attire.save()
+
+            uniform_attire_compute_total(request.POST['candidate'])
+
+            # return redirect('uniform_attire_detail', pk=uniform_attire.pk)
+            return redirect('candidates:uniform_attire_list')
+    else:
+        form = UniformAttireForm(instance=uniform_attire)
+        return render(request, 'candidates/uniform_attire_edit.html', {'form': form})
+
+
+@login_required(login_url='admin:login')
+def uniform_attire_overview(request):
+    data = UniformAttireTotal.objects.all().order_by('-total')
+    return render(request, 'candidates/uniform_attire_overview.html', {'data': data})
+
+
+def uniform_attire_compute_total(idx):
+    counter, poise_and_bearing, personality, beauty, performance_and_confidence, total = 0, 0, 0, 0, 0, 0
+
+    # get all votes of a candidate
+    for each in UniformAttire.objects.filter(candidate__id=idx):
+        counter += 1
+
+        poise_and_bearing += each.poise_and_bearing
+        personality += each.personality
+        beauty += each.beauty
+        performance_and_confidence += each.performance_and_confidence
+        total += each.total
+
+    uniform_attire_total = UniformAttireTotal.objects.get(candidate__id=idx)
+    uniform_attire_total.candidate = Candidate.objects.get(id=idx)
+    uniform_attire_total.poise_and_bearing = poise_and_bearing / counter
+    uniform_attire_total.personality = personality / counter
+    uniform_attire_total.beauty = beauty / counter
+    uniform_attire_total.performance_and_confidence = performance_and_confidence / counter
+    uniform_attire_total.total = total / counter
+    uniform_attire_total.votes = counter
+    uniform_attire_total.save()
 
 
 @login_required(login_url='admin:login')
@@ -211,16 +292,7 @@ def uniform_attire_add_all(request):
     pass
 
 
-@login_required(login_url='admin:login')
-def uniform_attire_overview(request):
-    pass
-
-
 def uniform_attire_add_all_logic(request):
-    pass
-
-
-def uniform_attire_compute_total():
     pass
 
 
